@@ -43,6 +43,7 @@
 		73360A842282B6C300286417 /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
 		73360A862282B94100286417 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		73360A882282BCFA00286417 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		73C4E479234F25B40078DF67 /* TestHost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestHost.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 		73360A6F2282B49500286417 /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
+				73C4E479234F25B40078DF67 /* TestHost.entitlements */,
 				73360A702282B49500286417 /* AppDelegate.swift */,
 				73360A722282B49500286417 /* MainViewController.swift */,
 				73360A862282B94100286417 /* ListViewController.swift */,
@@ -408,6 +410,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.lvv.SFSplitViewController;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -435,6 +438,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.lvv.SFSplitViewController;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -444,7 +448,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TestHost/TestHost.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = Y28WQ9G7N2;
 				INFOPLIST_FILE = TestHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -453,6 +460,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.lvv.TestHost;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -462,7 +470,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TestHost/TestHost.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = Y28WQ9G7N2;
 				INFOPLIST_FILE = TestHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -471,6 +482,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.lvv.TestHost;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

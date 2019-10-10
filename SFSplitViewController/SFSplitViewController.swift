@@ -16,7 +16,15 @@ public class SFSplitViewController : UISplitViewController, UISplitViewControlle
     private var maxMasterWidth: CGFloat = 0
     private var isPortrait: Bool {
         get {
-            return UIApplication.shared.statusBarOrientation.isPortrait
+#if targetEnvironment(macCatalyst)
+            return false
+#else
+            if #available(iOS 13, *) {
+                return UIApplication.shared.windows.first!.windowScene!.interfaceOrientation.isPortrait
+            } else {
+                return UIApplication.shared.statusBarOrientation.isPortrait
+            }
+#endif
         }
     }
 
@@ -66,7 +74,8 @@ public class SFSplitViewController : UISplitViewController, UISplitViewControlle
             toLandscapeWidth()
         }
     }
-
+    
+#if !targetEnvironment(macCatalyst)
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
@@ -98,9 +107,10 @@ public class SFSplitViewController : UISplitViewController, UISplitViewControlle
             toLandscapeWidth()
         }
     }
+#endif
 
     public func splitViewControllerSupportedInterfaceOrientations(_ splitViewController: UISplitViewController) -> UIInterfaceOrientationMask {
-        if UI_USER_INTERFACE_IDIOM() == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             return .all
         }
 
