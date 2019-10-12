@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SFSplitViewController : UISplitViewController, UISplitViewControllerDelegate {
+public class SFSplitViewController : UISplitViewController {
     @objc open var masterViewController: UINavigationController? = nil
     @objc open var detailViewController: UINavigationController? = nil
     @objc open var placeholderViewControllerClass: AnyClass = UIViewController.self
@@ -109,14 +109,6 @@ public class SFSplitViewController : UISplitViewController, UISplitViewControlle
     }
 #endif
 
-    public func splitViewControllerSupportedInterfaceOrientations(_ splitViewController: UISplitViewController) -> UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return .all
-        }
-
-        return .portrait
-    }
-
     private func toPortraitWidth() {
         maximumPrimaryColumnWidth = maxMasterWidth
         preferredPrimaryColumnWidthFraction = 1
@@ -125,6 +117,17 @@ public class SFSplitViewController : UISplitViewController, UISplitViewControlle
     private func toLandscapeWidth() {
         maximumPrimaryColumnWidth = UISplitViewController.automaticDimension
         preferredPrimaryColumnWidthFraction = UISplitViewController.automaticDimension
+    }
+}
+
+extension SFSplitViewController: UISplitViewControllerDelegate {
+    
+    public func splitViewControllerSupportedInterfaceOrientations(_ splitViewController: UISplitViewController) -> UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .all
+        }
+
+        return .portrait
     }
 
     public func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
