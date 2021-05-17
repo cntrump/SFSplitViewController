@@ -13,17 +13,25 @@ public class SFSplitViewController : UISplitViewController {
     @objc open var detailViewController: UINavigationController? = nil
     @objc open var placeholderViewControllerClass: AnyClass = UIViewController.self
 
-    private var maxMasterWidth: CGFloat = 0
     private var isPortrait: Bool {
         get {
 #if targetEnvironment(macCatalyst)
             return false
 #else
-            if #available(iOS 13, *) {
-                return UIApplication.shared.windows.first!.windowScene!.interfaceOrientation.isPortrait
-            } else {
-                return UIApplication.shared.statusBarOrientation.isPortrait
+            if traitCollection.horizontalSizeClass == .regular &&
+                traitCollection.verticalSizeClass == .regular {
+                if view.bounds.width > view.bounds.height {
+                    return false
+                }
+
+                return true
             }
+
+            if traitCollection.horizontalSizeClass == .regular {
+                return false
+            }
+
+            return true
 #endif
         }
     }
@@ -66,12 +74,21 @@ public class SFSplitViewController : UISplitViewController {
 
         delegate = self;
         preferredDisplayMode = .allVisible
-        maxMasterWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
 
         if isPortrait {
-            toPortraitWidth()
+            toPortraitMode(size: view.bounds.size)
         } else {
-            toLandscapeWidth()
+            toLandscapeMode()
+        }
+    }
+
+    public override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        if isPortrait {
+            toPortraitMode(size: view.bounds.size)
+        } else {
+            toLandscapeMode()
         }
     }
     
@@ -96,7 +113,7 @@ public class SFSplitViewController : UISplitViewController {
                 masterViewController?.viewControllers = subVCs
             }
 
-            toPortraitWidth()
+            toPortraitMode(size: size)
         } else {
             if subVCs.count > 1 {
                 subVCs.remove(at: 0)
@@ -104,17 +121,20 @@ public class SFSplitViewController : UISplitViewController {
                 detailViewController?.viewControllers = subVCs
             }
 
-            toLandscapeWidth()
+            toLandscapeMode()
         }
     }
 #endif
 
-    private func toPortraitWidth() {
-        maximumPrimaryColumnWidth = maxMasterWidth
+    private func toPortraitMode(size: CGSize) {
+        masterViewController?.view.frame = CGRect(origin: .zero, size: size)
+        detailViewController?.view.frame = CGRect(x: size.width, y: 0, width: 0, height: size.height)
+
+        maximumPrimaryColumnWidth = size.width
         preferredPrimaryColumnWidthFraction = 1
     }
 
-    private func toLandscapeWidth() {
+    private func toLandscapeMode() {
         maximumPrimaryColumnWidth = UISplitViewController.automaticDimension
         preferredPrimaryColumnWidthFraction = UISplitViewController.automaticDimension
     }
